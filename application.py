@@ -69,4 +69,8 @@ def get_names():
 
 
 if __name__ == '__main__':
+<<<<<<< HEAD:endpoint.py
+    app.run('0.0.0.0')
+=======
     app.run(port=80)
+>>>>>>> d0ee86afe37db35d27d4fed7976fdcc486f26a12:application.py
