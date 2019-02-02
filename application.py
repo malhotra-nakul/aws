@@ -72,12 +72,14 @@ def get_items(value):
     arr = []
 
     for x in range(int(value)):
+        id = data[x]['sourceId']# <-- The source Id
         title = data[x]['title']# <-- The display title
         description = data[x]['description']# <-- The reputation
         image = data[x]['typeAttributes']['imageLarge'] # <-- Large Display Image
         date = data[x]['readablePublishedAt'] # <-- Published Date
 
         information = {}
+        information['sourceId'] = id
         information['title'] = title
         information['description'] = description
         information['imageLarge'] = image
