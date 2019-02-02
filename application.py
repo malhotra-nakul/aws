@@ -60,7 +60,7 @@ def get_category():
 
 @app.route('/items/<value>')
 def get_items(value):
-    uri = "https://www.cbc.ca/aggregate_api/v1/items"
+    uri = "https://www.cbc.ca/aggregate_api/v1/items?type=story&includeCount=true"
 
     try:
         uResponse = requests.get(uri)
