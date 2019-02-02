@@ -37,12 +37,6 @@ def hello_name(name):
     return "Hello {}!".format(name)
 
 
-@app.route('/authors')
-def get_authors():
-     data = request.get_json('https://www.cbc.ca/aggregate_api/v1/authors')
-     name = data['name']
-     return name
-
 @app.route('/author')
 def get_author():
     uri = "https://www.cbc.ca/aggregate_api/v1/authors"
@@ -56,9 +50,50 @@ def get_author():
 
     name = data[0]['name']# <-- The display name
     bio = data[0]['bio']# <-- The reputation
+    image = data[0]['imageLarge'] # <-- Large Display Image
 
-    return str(data[0])
+    information = {}
+    information['name'] = name
+    information['bio'] = bio
+    information['imageLarge'] = image
+    json_information = json.dumps(information)
 
+    return json_information
+
+
+
+@app.route('/category')
+def get_category():
+    return requests.get('https://www.cbc.ca/aggregate_api/v1/categories').content
+
+@app.route('/items/<value>')
+def get_items(value):
+    uri = "https://www.cbc.ca/aggregate_api/v1/items"
+
+    try:
+        uResponse = requests.get(uri)
+    except requests.ConnectionError:
+       return "Connection Error"
+    Jresponse = uResponse.text
+    data = json.loads(Jresponse)
+
+    arr = []
+
+    for x in range(int(value)):
+        title = data[x]['title']# <-- The display title
+        description = data[x]['description']# <-- The reputation
+        image = data[x]['typeAttributes']['imageLarge'] # <-- Large Display Image
+        date = data[x]['readablePublishedAt'] # <-- Published Date
+
+        information = {}
+        information['title'] = title
+        information['description'] = description
+        information['imageLarge'] = image
+        information['publishDate'] = date
+        arr.append(information)
+        json_information = json.dumps(arr)
+
+    return json_information
 
 
 @app.route('/names')
@@ -69,8 +104,4 @@ def get_names():
 
 
 if __name__ == '__main__':
-<<<<<<< HEAD:endpoint.py
-    app.run('0.0.0.0')
-=======
-    app.run(port=80)
->>>>>>> d0ee86afe37db35d27d4fed7976fdcc486f26a12:application.py
+    app.run()
