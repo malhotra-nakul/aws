@@ -59,21 +59,7 @@ def get_author():
 
     return str(data[0])
 
-@app.route('/author')
-def get_author():
-    uri = "https://www.cbc.ca/aggregate_api/v1/authors"
 
-    try:
-        uResponse = requests.get(uri)
-    except requests.ConnectionError:
-       return "Connection Error"
-    Jresponse = uResponse.text
-    data = json.loads(Jresponse)
-
-    name = data[0]['name']# <-- The display name
-    bio = data[0]['bio']# <-- The reputation
-
-    return str(data[0])
 
 @app.route('/names')
 def get_names():
