@@ -1,6 +1,5 @@
 from flask import Flask,jsonify
 import requests
-import simplejson
 import json
 
 app = Flask(__name__)
@@ -26,11 +25,7 @@ https://www.cbc.ca/json/cmlink/{} where {} is the content id
 
 1) Get ALL news, be able to pass in the CATEGORY of news (any other paramaters work)
 2)
-
-https://stackoverflow.com/questions/12934699/selecting-fields-from-json-output
 '''
-
-
 
 @app.route('/<name>')
 def hello_name(name):
@@ -56,11 +51,8 @@ def get_author():
     information['name'] = name
     information['bio'] = bio
     information['imageLarge'] = image
-    json_information = json.dumps(information)
 
-    return json_information
-
-
+    return jsonify({'authors':information})
 
 @app.route('/category')
 def get_category():
@@ -91,17 +83,15 @@ def get_items(value):
         information['imageLarge'] = image
         information['publishDate'] = date
         arr.append(information)
-        json_information = json.dumps(arr)
 
-    return json_information
+    return jsonify({'items':arr})
 
-
-@app.route('/names')
-def get_names():
-    response = requests.get('https://www.cbc.ca/aggregate_api/v1/authors')
-    names = json.loads(response.text)
-    return names[0]["name"]
-
+'''
+@app.route('/user/<userid>')
+def get_user(userid):
+    #insert results from clustering
+    return stories
+'''
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0", port=80)
