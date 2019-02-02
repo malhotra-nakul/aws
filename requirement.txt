@@ -2,3 +2,4 @@ flask
 requests
 simplejson
 python-requests
+json
