@@ -73,7 +73,7 @@ def get_items(value):
         id = data[x]['sourceId']# <-- The source Id
         title = data[x]['title']# <-- The display title
         description = data[x]['description']# <-- The reputation
-        image = data[x]['typeAttributes']['imageSmall'] # <-- Large Display Image
+        image = data[x]['typeAttributes']['imageLarge'] # <-- Large Display Image
         date = data[x]['publishedAt'] # <-- Published Date
 
         information = {}
