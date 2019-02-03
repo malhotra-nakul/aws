@@ -73,24 +73,44 @@ def get_items(value):
         id = data[x]['sourceId']# <-- The source Id
         title = data[x]['title']# <-- The display title
         description = data[x]['description']# <-- The reputation
-        image = data[x]['images']['square_140'] # <-- Large Display Image
+        image = data[x]['typeAttributes']['imageSmall'] # <-- Large Display Image
         date = data[x]['publishedAt'] # <-- Published Date
 
         information = {}
         information['sourceId'] = id
         information['title'] = title
         information['description'] = description
-        information['squareImage'] = image
+        information['image'] = image
         information['publishTime'] = date
         arr.append(information)
 
     return jsonify(arr)
 
-'''
 @app.route('/news/<sourceId>')
 def get_news(sourceId):
+    id = str(sourceId)
+    uri = "https://www.cbc.ca/json/cmlink/" + id
 
-'''
+    try:
+        uResponse = requests.get(uri)
+    except requests.ConnectionError:
+       return "Connection Error"
+    Jresponse = uResponse.text
+    data = json.loads(Jresponse)
+
+    information = {}
+    information['body'] = data['body']# <-- The display name
+    information['title'] = data['headline']# <-- The reputation
+    information['image'] = data['headlineimage']['originalimage']['fileurl'] # <-- Display Image
+    information['date'] = data['epoch']['pubdate'] # <-- Published Date
+    try:
+        information['author'] = data['author']['bio']['name'] # <-- Author
+        information['authorImage'] = data['author']['bio']['photo']['derivatives']['square_140']['fileurl'] # <-- Author Image
+    except:
+        print("no author")
+
+    return jsonify(information)
+
 '''
 @app.route('/user/<userid>')
 def get_user(userid):
