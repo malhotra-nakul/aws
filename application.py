@@ -1,9 +1,9 @@
 from flask import Flask,jsonify
 import requests
 import json
-import pickle
-import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
+#import pickle
+#import numpy as np
+#from sklearn.metrics.pairwise import cosine_similarity
 
 app = Flask(__name__)
 
@@ -113,7 +113,7 @@ def get_news(sourceId):
         print("no author")
 
     return jsonify(information)
-
+'''
 @app.route('/user/')
 def post_user():
     with open("cbcModel.pk","rb") as cbc:
@@ -161,6 +161,6 @@ def post_user():
     for i in indices:
         bestRecommendationIds.append(cbc[2][i])
     return jsonify(bestRecommendationIds)
-
+'''
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
