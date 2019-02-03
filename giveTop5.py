@@ -12,8 +12,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 with open("cbcModel.pk","rb") as cbc:
     cbc = pickle.load(cbc)
-    
+
 ID = cbc[2][4]
+print(ID)
 
 #First, find best cluster
 pos = np.inf
@@ -32,13 +33,13 @@ for idx, centroid in enumerate(cbc[1]):
     if sim > bestSim:
         bestSim = sim
         bestCentroidPosition = idx
-        
+
 itemsInSameCluster = []
 
 for idx, pos in enumerate(cbc[3]):
     if pos == bestCentroidPosition:
         itemsInSameCluster.append(idx)
-    
+
 vectorsToCompare = []
 for i in itemsInSameCluster:
     vectorsToCompare.append((cbc[0][i], i))
@@ -52,5 +53,5 @@ indices = [similarities[i][1] for i in range(len(similarities))]
 
 for i in indices:
     bestRecommendationIds.append(cbc[2][i])
-    
+
 print(bestRecommendationIds)
