@@ -4,8 +4,6 @@ import json
 
 app = Flask(__name__)
 
-# https://www.cbc.ca/aggregate_api/v1/swagger-ui.html#!/Authors/listAuthors
-
 '''
 Example of training data
 https://www.cbc.ca/json/cmlink/{} where {} is the content id
@@ -75,19 +73,24 @@ def get_items(value):
         id = data[x]['sourceId']# <-- The source Id
         title = data[x]['title']# <-- The display title
         description = data[x]['description']# <-- The reputation
-        image = data[x]['typeAttributes']['imageLarge'] # <-- Large Display Image
-        date = data[x]['readablePublishedAt'] # <-- Published Date
+        image = data[x]['images']['square_140'] # <-- Large Display Image
+        date = data[x]['publishedAt'] # <-- Published Date
 
         information = {}
         information['sourceId'] = id
         information['title'] = title
         information['description'] = description
-        information['imageLarge'] = image
-        information['publishDate'] = date
+        information['squareImage'] = image
+        information['publishTime'] = date
         arr.append(information)
 
-    return jsonify({'items':arr})
+    return jsonify(arr)
 
+'''
+@app.route('/news/<sourceId>')
+def get_news(sourceId):
+
+'''
 '''
 @app.route('/user/<userid>')
 def get_user(userid):
